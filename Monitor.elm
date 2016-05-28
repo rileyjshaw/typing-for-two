@@ -21,6 +21,7 @@ type Msg
 init : (Model, Cmd Msg)
 init = (Model ' ', Cmd.none)
 
+
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of

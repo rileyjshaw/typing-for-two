@@ -1,12 +1,15 @@
 module Tutor exposing (Model, Msg, init, update, view, subscriptions)
 
+import Array
 import String
 import Char
+import Random
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Keyboard
+import Sources exposing (sources)
 
 
 type alias Model =
@@ -18,12 +21,11 @@ type alias Model =
 
 type Msg
   = Keypress Keyboard.KeyCode
+  | SetSentence Int
 
-
-t = "Some folks think that I'm just lazy, but the truth is that I'm really crazy"
 
 init : (Model, Cmd Msg)
-init = (Model t "" 0, Cmd.none)
+init = (Model "" "" 0, Random.generate SetSentence (Random.int 0 (Array.length sources) ) )
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -35,8 +37,11 @@ update msg model =
       in
         ({ model |
           attempt = model.attempt ++ letter
-        , score = model.score + if letter == (String.slice len (len + 1) t) then 1 else 0
+        , score = model.score + if letter == (String.slice len (len + 1) model.sourceText) then 1 else 0
         }, Cmd.none)
+
+    SetSentence n ->
+      ({ model | sourceText = Maybe.withDefault "" (Array.get n sources) }, Cmd.none)
 
 
 view : Model -> Html Msg
@@ -48,7 +53,7 @@ view model =
       )
       (String.toList model.sourceText) (String.toList model.attempt)
     )]
-    ++ [span [] [text (String.dropLeft (String.length model.attempt) t)]]
+    ++ [span [] [text (String.dropLeft (String.length model.attempt) model.sourceText)]]
     ++ [p [] [text (toString model.score)]]
   )
 

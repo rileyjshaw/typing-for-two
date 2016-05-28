@@ -78,10 +78,14 @@ view : Model -> Html Msg
 view model =
   div [ style [ ("display", "flex")
               , ("position", "relative")
-              , ("height", "100%") ] ]
+              , ("height", "100%")
+              , ("width", "100%")
+              , ("justify-content", "space-between") ] ]
     [ stylesheet
-    , Html.map LeftTutor (Tutor.view model.leftTutor)
-    , Html.map RightTutor (Tutor.view model.rightTutor)
+    , div [ style [ ("flex", "1 1 40%") ] ]
+      [ (Html.map LeftTutor (Tutor.view model.leftTutor)) ]
+    , div [ style [ ("flex", "1 1 40%") ] ]
+      [ (Html.map RightTutor (Tutor.view model.rightTutor)) ]
     , div [ style [ ("position", "absolute")
                   , ("top", "50%")
                   , ("left", "0")
