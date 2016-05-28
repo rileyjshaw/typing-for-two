@@ -7843,31 +7843,6 @@ var _elm_lang$keyboard$Keyboard$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Keyboard'] = {pkg: 'elm-lang/keyboard', init: _elm_lang$keyboard$Keyboard$init, onEffects: _elm_lang$keyboard$Keyboard$onEffects, onSelfMsg: _elm_lang$keyboard$Keyboard$onSelfMsg, tag: 'sub', subMap: _elm_lang$keyboard$Keyboard$subMap};
-var _rileyjshaw$typing_for_two$Tutor$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$p,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(model.test)
-					])),
-				A2(
-				_elm_lang$html$Html$p,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(model.attempt)
-					]))
-			]));
-};
 var _rileyjshaw$typing_for_two$Tutor$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
@@ -7876,12 +7851,82 @@ var _rileyjshaw$typing_for_two$Tutor$update = F2(
 			_0: _elm_lang$core$Native_Utils.update(
 				model,
 				{
-					attempt: A2(_elm_lang$core$Basics_ops['++'], model.attempt, 'a')
+					attempt: A2(
+						_elm_lang$core$Basics_ops['++'],
+						model.attempt,
+						_elm_lang$core$String$fromChar(
+							_elm_lang$core$Char$fromCode(_p0._0)))
 				}),
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
 var _rileyjshaw$typing_for_two$Tutor$t = 'Some folks think that I\'m just lazy, but the truth is that I\'m really crazy';
+var _rileyjshaw$typing_for_two$Tutor$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$span,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					A3(
+						_elm_lang$core$List$map2,
+						F2(
+							function (a, b) {
+								return _elm_lang$core$Native_Utils.eq(a, b) ? A2(
+									_elm_lang$html$Html$span,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$style(
+											_elm_lang$core$Native_List.fromArray(
+												[
+													{ctor: '_Tuple2', _0: 'color', _1: '#0f0'}
+												]))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text(
+											_elm_lang$core$String$fromChar(a))
+										])) : A2(
+									_elm_lang$html$Html$span,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$style(
+											_elm_lang$core$Native_List.fromArray(
+												[
+													{ctor: '_Tuple2', _0: 'color', _1: '#f00'}
+												]))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text(
+											_elm_lang$core$String$fromChar(a))
+										]));
+							}),
+						_elm_lang$core$String$toList(model.test),
+						_elm_lang$core$String$toList(model.attempt)))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$span,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(
+							A2(
+								_elm_lang$core$String$dropLeft,
+								_elm_lang$core$String$length(model.attempt),
+								_rileyjshaw$typing_for_two$Tutor$t))
+						]))
+				])));
+};
 var _rileyjshaw$typing_for_two$Tutor$Model = F2(
 	function (a, b) {
 		return {test: a, attempt: b};
@@ -7897,101 +7942,185 @@ var _rileyjshaw$typing_for_two$Tutor$Keypress = function (a) {
 var _rileyjshaw$typing_for_two$Tutor$subscriptions = function (model) {
 	return _elm_lang$keyboard$Keyboard$presses(_rileyjshaw$typing_for_two$Tutor$Keypress);
 };
-var _rileyjshaw$typing_for_two$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
+var _rileyjshaw$typing_for_two$Monitor$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$p,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$style(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'font-size', _1: '100px'},
+						{ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
+						{ctor: '_Tuple2', _0: 'margin', _1: '0'}
+					]))
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(
+				_elm_lang$core$String$fromChar(model.lastChar))
+			]));
 };
-var _rileyjshaw$typing_for_two$Main$Model = F2(
-	function (a, b) {
-		return {count: a, tutor1: b};
+var _rileyjshaw$typing_for_two$Monitor$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					lastChar: _elm_lang$core$Char$fromCode(_p0._0)
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
 	});
+var _rileyjshaw$typing_for_two$Monitor$Model = function (a) {
+	return {lastChar: a};
+};
+var _rileyjshaw$typing_for_two$Monitor$init = {
+	ctor: '_Tuple2',
+	_0: _rileyjshaw$typing_for_two$Monitor$Model(
+		_elm_lang$core$Native_Utils.chr(' ')),
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _rileyjshaw$typing_for_two$Monitor$Keypress = function (a) {
+	return {ctor: 'Keypress', _0: a};
+};
+var _rileyjshaw$typing_for_two$Monitor$subscriptions = function (model) {
+	return _elm_lang$keyboard$Keyboard$presses(_rileyjshaw$typing_for_two$Monitor$Keypress);
+};
+var _rileyjshaw$typing_for_two$Main$Model = F3(
+	function (a, b, c) {
+		return {leftTutor: a, rightTutor: b, monitor: c};
+	});
+var _rileyjshaw$typing_for_two$Main$MonitorMsg = function (a) {
+	return {ctor: 'MonitorMsg', _0: a};
+};
+var _rileyjshaw$typing_for_two$Main$RightTutor = function (a) {
+	return {ctor: 'RightTutor', _0: a};
+};
 var _rileyjshaw$typing_for_two$Main$LeftTutor = function (a) {
 	return {ctor: 'LeftTutor', _0: a};
 };
 var _rileyjshaw$typing_for_two$Main$init = function () {
-	var _p0 = _rileyjshaw$typing_for_two$Tutor$init;
-	var tutorModel = _p0._0;
-	var tutorCmd = _p0._1;
+	var _p0 = _rileyjshaw$typing_for_two$Monitor$init;
+	var monitorModel = _p0._0;
+	var monitorCmd = _p0._1;
+	var _p1 = _rileyjshaw$typing_for_two$Tutor$init;
+	var tutorModel = _p1._0;
+	var tutorCmd = _p1._1;
 	return {
 		ctor: '_Tuple2',
-		_0: A2(_rileyjshaw$typing_for_two$Main$Model, 0, tutorModel),
-		_1: A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$LeftTutor, tutorCmd)
+		_0: A3(_rileyjshaw$typing_for_two$Main$Model, tutorModel, tutorModel, monitorModel),
+		_1: _elm_lang$core$Platform_Cmd$batch(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$LeftTutor, tutorCmd),
+					A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$RightTutor, tutorCmd),
+					A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$MonitorMsg, monitorCmd)
+				]))
 	};
 }();
 var _rileyjshaw$typing_for_two$Main$update = F2(
 	function (msg, model) {
-		var _p1 = msg;
-		switch (_p1.ctor) {
-			case 'Increment':
+		var _p2 = msg;
+		switch (_p2.ctor) {
+			case 'LeftTutor':
+				var _p3 = A2(_rileyjshaw$typing_for_two$Tutor$update, _p2._0, model.leftTutor);
+				var leftModel = _p3._0;
+				var cmd = _p3._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{count: model.count + 1}),
-					_1: _elm_lang$core$Platform_Cmd$none
+						{leftTutor: leftModel}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$LeftTutor, cmd)
 				};
-			case 'Decrement':
+			case 'RightTutor':
+				var _p4 = A2(_rileyjshaw$typing_for_two$Tutor$update, _p2._0, model.rightTutor);
+				var rightModel = _p4._0;
+				var cmd = _p4._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{count: model.count - 1}),
-					_1: _elm_lang$core$Platform_Cmd$none
+						{rightTutor: rightModel}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$RightTutor, cmd)
 				};
 			default:
-				var _p2 = A2(_rileyjshaw$typing_for_two$Tutor$update, _p1._0, model.tutor1);
-				var leftModel = _p2._0;
-				var leftCmd = _p2._1;
+				var _p5 = A2(_rileyjshaw$typing_for_two$Monitor$update, _p2._0, model.monitor);
+				var mod = _p5._0;
+				var cmd = _p5._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{tutor1: leftModel}),
-					_1: A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$LeftTutor, leftCmd)
+						{monitor: mod}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _rileyjshaw$typing_for_two$Main$MonitorMsg, cmd)
 				};
 		}
 	});
-var _rileyjshaw$typing_for_two$Main$Decrement = {ctor: 'Decrement'};
-var _rileyjshaw$typing_for_two$Main$Increment = {ctor: 'Increment'};
 var _rileyjshaw$typing_for_two$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[
+				_elm_lang$html$Html_Attributes$style(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'display', _1: 'flex'},
+						{ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+						{ctor: '_Tuple2', _0: 'height', _1: '100%'}
+					]))
+			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_rileyjshaw$typing_for_two$Main$Decrement)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('-')
-					])),
+				_elm_lang$html$Html_App$map,
+				_rileyjshaw$typing_for_two$Main$LeftTutor,
+				_rileyjshaw$typing_for_two$Tutor$view(model.leftTutor)),
+				A2(
+				_elm_lang$html$Html_App$map,
+				_rileyjshaw$typing_for_two$Main$RightTutor,
+				_rileyjshaw$typing_for_two$Tutor$view(model.rightTutor)),
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(model.count))
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_rileyjshaw$typing_for_two$Main$Increment)
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
+								{ctor: '_Tuple2', _0: 'top', _1: '50%'},
+								{ctor: '_Tuple2', _0: 'left', _1: '0'},
+								{ctor: '_Tuple2', _0: 'width', _1: '100%'}
+							]))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('+')
-					])),
+						A2(
+						_elm_lang$html$Html_App$map,
+						_rileyjshaw$typing_for_two$Main$MonitorMsg,
+						_rileyjshaw$typing_for_two$Monitor$view(model.monitor))
+					]))
+			]));
+};
+var _rileyjshaw$typing_for_two$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		_elm_lang$core$Native_List.fromArray(
+			[
 				A2(
-				_elm_lang$html$Html_App$map,
+				_elm_lang$core$Platform_Sub$map,
 				_rileyjshaw$typing_for_two$Main$LeftTutor,
-				_rileyjshaw$typing_for_two$Tutor$view(model.tutor1))
+				_rileyjshaw$typing_for_two$Tutor$subscriptions(model.leftTutor)),
+				A2(
+				_elm_lang$core$Platform_Sub$map,
+				_rileyjshaw$typing_for_two$Main$RightTutor,
+				_rileyjshaw$typing_for_two$Tutor$subscriptions(model.rightTutor)),
+				A2(
+				_elm_lang$core$Platform_Sub$map,
+				_rileyjshaw$typing_for_two$Main$MonitorMsg,
+				_rileyjshaw$typing_for_two$Monitor$subscriptions(model.monitor))
 			]));
 };
 var _rileyjshaw$typing_for_two$Main$main = {
