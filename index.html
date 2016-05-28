@@ -7843,24 +7843,26 @@ var _elm_lang$keyboard$Keyboard$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Keyboard'] = {pkg: 'elm-lang/keyboard', init: _elm_lang$keyboard$Keyboard$init, onEffects: _elm_lang$keyboard$Keyboard$onEffects, onSelfMsg: _elm_lang$keyboard$Keyboard$onSelfMsg, tag: 'sub', subMap: _elm_lang$keyboard$Keyboard$subMap};
+var _rileyjshaw$typing_for_two$Tutor$t = 'Some folks think that I\'m just lazy, but the truth is that I\'m really crazy';
 var _rileyjshaw$typing_for_two$Tutor$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
+		var len = _elm_lang$core$String$length(model.attempt);
+		var letter = _elm_lang$core$String$fromChar(
+			_elm_lang$core$Char$fromCode(_p0._0));
 		return {
 			ctor: '_Tuple2',
 			_0: _elm_lang$core$Native_Utils.update(
 				model,
 				{
-					attempt: A2(
-						_elm_lang$core$Basics_ops['++'],
-						model.attempt,
-						_elm_lang$core$String$fromChar(
-							_elm_lang$core$Char$fromCode(_p0._0)))
+					attempt: A2(_elm_lang$core$Basics_ops['++'], model.attempt, letter),
+					score: model.score + (_elm_lang$core$Native_Utils.eq(
+						letter,
+						A3(_elm_lang$core$String$slice, len, len + 1, _rileyjshaw$typing_for_two$Tutor$t)) ? 1 : 0)
 				}),
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
-var _rileyjshaw$typing_for_two$Tutor$t = 'Some folks think that I\'m just lazy, but the truth is that I\'m really crazy';
 var _rileyjshaw$typing_for_two$Tutor$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -7908,32 +7910,46 @@ var _rileyjshaw$typing_for_two$Tutor$view = function (model) {
 											_elm_lang$core$String$fromChar(a))
 										]));
 							}),
-						_elm_lang$core$String$toList(model.test),
+						_elm_lang$core$String$toList(model.sourceText),
 						_elm_lang$core$String$toList(model.attempt)))
 				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$span,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text(
-							A2(
-								_elm_lang$core$String$dropLeft,
-								_elm_lang$core$String$length(model.attempt),
-								_rileyjshaw$typing_for_two$Tutor$t))
-						]))
-				])));
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$span,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(
+								A2(
+									_elm_lang$core$String$dropLeft,
+									_elm_lang$core$String$length(model.attempt),
+									_rileyjshaw$typing_for_two$Tutor$t))
+							]))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$p,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(model.score))
+							]))
+					]))));
 };
-var _rileyjshaw$typing_for_two$Tutor$Model = F2(
-	function (a, b) {
-		return {test: a, attempt: b};
+var _rileyjshaw$typing_for_two$Tutor$Model = F3(
+	function (a, b, c) {
+		return {sourceText: a, attempt: b, score: c};
 	});
 var _rileyjshaw$typing_for_two$Tutor$init = {
 	ctor: '_Tuple2',
-	_0: A2(_rileyjshaw$typing_for_two$Tutor$Model, _rileyjshaw$typing_for_two$Tutor$t, ''),
+	_0: A3(_rileyjshaw$typing_for_two$Tutor$Model, _rileyjshaw$typing_for_two$Tutor$t, '', 0),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _rileyjshaw$typing_for_two$Tutor$Keypress = function (a) {
@@ -7989,6 +8005,18 @@ var _rileyjshaw$typing_for_two$Monitor$Keypress = function (a) {
 var _rileyjshaw$typing_for_two$Monitor$subscriptions = function (model) {
 	return _elm_lang$keyboard$Keyboard$presses(_rileyjshaw$typing_for_two$Monitor$Keypress);
 };
+var _rileyjshaw$typing_for_two$Main$stylesheet = function () {
+	var children = _elm_lang$core$Native_List.fromArray(
+		[]);
+	var attrs = _elm_lang$core$Native_List.fromArray(
+		[
+			A2(_elm_lang$html$Html_Attributes$attribute, 'rel', 'stylesheet'),
+			A2(_elm_lang$html$Html_Attributes$attribute, 'property', 'stylesheet'),
+			A2(_elm_lang$html$Html_Attributes$attribute, 'href', './yuck.css')
+		]);
+	var tag = 'link';
+	return A3(_elm_lang$html$Html$node, tag, attrs, children);
+}();
 var _rileyjshaw$typing_for_two$Main$Model = F3(
 	function (a, b, c) {
 		return {leftTutor: a, rightTutor: b, monitor: c};
@@ -8075,6 +8103,7 @@ var _rileyjshaw$typing_for_two$Main$view = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
+				_rileyjshaw$typing_for_two$Main$stylesheet,
 				A2(
 				_elm_lang$html$Html_App$map,
 				_rileyjshaw$typing_for_two$Main$LeftTutor,
