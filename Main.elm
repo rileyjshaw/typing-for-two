@@ -2,6 +2,7 @@ import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Tutor as Tutor
 
 main =
   Html.program
@@ -12,15 +13,28 @@ main =
     }
 
 type alias Model =
-    { count: Int
+    { count : Int
+    , leftTutor : Tutor.Model
+    , rightTutor: Tutor.Model
     }
 
 init : (Model, Cmd Msg)
 init =
-    (Model 0, Cmd.none)
+    let
+        (tutorModel, tutorCmd) = Tutor.init
+    in
+        (Model 0 tutorModel tutorModel, Cmd.batch
+          [ Cmd.map LeftTutor tutorCmd
+          , Cmd.map RightTutor tutorCmd
+          ])
 
 
-type Msg = Increment | Decrement
+type Msg
+  = Increment
+  | Decrement
+  | LeftTutor Tutor.Msg
+  | RightTutor Tutor.Msg
+
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -31,14 +45,34 @@ update msg model =
         Decrement ->
             ({ model | count = model.count - 1 }, Cmd.none)
 
+        LeftTutor leftMsg ->
+            let
+                (leftModel, leftCmd) =
+                    Tutor.update leftMsg model.leftTutor
+            in
+                ({ model | leftTutor = leftModel }, Cmd.map LeftTutor leftCmd)
+
+        RightTutor rightMsg ->
+            let
+                (rightModel, rightCmd) =
+                    Tutor.update rightMsg model.rightTutor
+            in
+                ({ model | rightTutor = rightModel }, Cmd.map RightTutor rightCmd)
+
+
 view : Model -> Html Msg
 view model =
     div []
         [ button [ onClick Decrement ] [ text "-" ]
         , div [] [ text (toString model.count) ]
         , button [ onClick Increment ] [ text "+" ]
+        , Html.map LeftTutor (Tutor.view model.leftTutor)
+        , Html.map RightTutor (Tutor.view model.rightTutor)
         ]
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+  Sub.batch
+    [ Sub.map LeftTutor (Tutor.subscriptions model.leftTutor)
+    , Sub.map RightTutor (Tutor.subscriptions model.rightTutor)
+    ]
