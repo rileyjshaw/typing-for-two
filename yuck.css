@@ -1,4 +1,43 @@
-/* TODO(riley): Style more things! */
-body {
+/* It's a hackathon give me a break. */
+html, body {
+  height: 100%;
   font-size: 18px;
+}
+
+/* "Tutor" box */
+link + div, link + div + div {
+  position: absolute;
+  top: 50%;
+  width: 400px;
+  padding: 1em 2em;
+  box-sizing: border-box;
+  border: 8px solid black;
+}
+
+/* Score text */
+link + div p, link + div + div p {
+  margin-bottom: 4px;
+}
+
+link + div p > span + span, link + div + div p > span + span {
+  padding-left: 0.3em;
+  font-size: 4em;
+  vertical-align: middle;
+}
+
+/* Player 1 */
+link + div {
+  left: 25%;
+  transform: translate(-50%, -50%);
+}
+
+/* Player 2 */
+link + div + div {
+  right: 25%;
+  transform: translate(50%, -50%);
+}
+
+/* Last character pressed */
+link + div + div + div {
+  transform: translate(0, -50%)
 }

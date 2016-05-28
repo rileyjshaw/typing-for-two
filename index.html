@@ -8300,8 +8300,23 @@ var _rileyjshaw$typing_for_two$Tutor$view = function (model) {
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html$text(
-								_elm_lang$core$Basics$toString(model.score))
+								A2(
+								_elm_lang$html$Html$span,
+								_elm_lang$core$Native_List.fromArray(
+									[]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Score: ')
+									])),
+								A2(
+								_elm_lang$html$Html$span,
+								_elm_lang$core$Native_List.fromArray(
+									[]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(model.score))
+									]))
 							]))
 					]))));
 };
@@ -8371,7 +8386,7 @@ var _rileyjshaw$typing_for_two$Monitor$view = function (model) {
 				_elm_lang$html$Html_Attributes$style(
 				_elm_lang$core$Native_List.fromArray(
 					[
-						{ctor: '_Tuple2', _0: 'font-size', _1: '100px'},
+						{ctor: '_Tuple2', _0: 'font-size', _1: '140px'},
 						{ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
 						{ctor: '_Tuple2', _0: 'margin', _1: '0'}
 					]))

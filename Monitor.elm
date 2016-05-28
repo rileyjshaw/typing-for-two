@@ -31,7 +31,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  p [ style [ ("font-size", "100px")
+  p [ style [ ("font-size", "140px")
             , ("text-align", "center")
             , ("margin", "0") ] ]
     [ text (String.fromChar model.lastChar) ]

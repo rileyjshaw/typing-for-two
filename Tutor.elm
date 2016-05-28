@@ -54,7 +54,7 @@ view model =
       (String.toList model.sourceText) (String.toList model.attempt)
     )]
     ++ [span [] [text (String.dropLeft (String.length model.attempt) model.sourceText)]]
-    ++ [p [] [text (toString model.score)]]
+    ++ [p [] [(span [] [text "Score: "]), (span [] [text (toString model.score)])]]
   )
 
 
