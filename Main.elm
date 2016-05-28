@@ -2,6 +2,7 @@ import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Tutor as Tutor
 
 main =
   Html.program
@@ -12,7 +13,8 @@ main =
     }
 
 type alias Model =
-    { count: Int
+    { count : Int
+    , tutor1 : Tutor.Model
     }
 
 init : (Model, Cmd Msg)
