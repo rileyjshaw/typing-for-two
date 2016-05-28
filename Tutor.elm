@@ -34,9 +34,12 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ p [] [ text model.test ]
-    , p [] [ text model.attempt ]
-    ]
+    ([ span [] (List.map2 (\a b -> if a == b
+        then span [style [ ("color", "#0f0") ]] [text (String.fromChar a)]
+        else span [style [ ("color", "#f00") ]] [text (String.fromChar a)]
+      )
+      (String.toList model.test) (String.toList model.attempt)
+    )] ++ [span [] [text (String.dropLeft (String.length model.attempt) t)]])
 
 
 subscriptions : Model -> Sub Msg
