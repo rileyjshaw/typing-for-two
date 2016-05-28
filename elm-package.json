@@ -1,7 +1,7 @@
 {
     "version": "0.0.0",
     "summary": "A typing tutor for two.",
-    "repository": "https://github.com/rileyjshaw/2p-typing.git",
+    "repository": "https://github.com/rileyjshaw/typing-for-two.git",
     "license": "Public domain",
     "source-directories": [
         "."
