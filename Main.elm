@@ -13,38 +13,31 @@ main =
     }
 
 type alias Model =
-    { count : Int
-    , leftTutor : Tutor.Model
+    { leftTutor : Tutor.Model
     , rightTutor: Tutor.Model
     }
+
+
+
+type Msg
+  = LeftTutor Tutor.Msg
+  | RightTutor Tutor.Msg
+
 
 init : (Model, Cmd Msg)
 init =
     let
         (tutorModel, tutorCmd) = Tutor.init
     in
-        (Model 0 tutorModel tutorModel, Cmd.batch
+        (Model tutorModel tutorModel, Cmd.batch
           [ Cmd.map LeftTutor tutorCmd
           , Cmd.map RightTutor tutorCmd
           ])
 
 
-type Msg
-  = Increment
-  | Decrement
-  | LeftTutor Tutor.Msg
-  | RightTutor Tutor.Msg
-
-
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-        Increment ->
-            ({ model | count = model.count + 1 }, Cmd.none)
-
-        Decrement ->
-            ({ model | count = model.count - 1 }, Cmd.none)
-
         LeftTutor leftMsg ->
             let
                 (leftModel, leftCmd) =
@@ -63,10 +56,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Decrement ] [ text "-" ]
-        , div [] [ text (toString model.count) ]
-        , button [ onClick Increment ] [ text "+" ]
-        , Html.map LeftTutor (Tutor.view model.leftTutor)
+        [ Html.map LeftTutor (Tutor.view model.leftTutor)
         , Html.map RightTutor (Tutor.view model.rightTutor)
         ]
 
