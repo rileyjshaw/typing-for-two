@@ -49,7 +49,7 @@ view model =
       (String.toList model.sourceText) (String.toList model.attempt)
     )]
     ++ [span [] [text (String.dropLeft (String.length model.attempt) t)]]
-    ++ [span [] [text (toString model.score)]]
+    ++ [p [] [text (toString model.score)]]
   )
 
 
