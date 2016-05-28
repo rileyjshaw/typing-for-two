@@ -13,11 +13,9 @@ main =
     }
 
 type alias Model =
-    { leftTutor : Tutor.Model
-    , rightTutor: Tutor.Model
-    }
-
-
+  { leftTutor : Tutor.Model
+  , rightTutor: Tutor.Model
+  }
 
 type Msg
   = LeftTutor Tutor.Msg
@@ -26,39 +24,39 @@ type Msg
 
 init : (Model, Cmd Msg)
 init =
-    let
-        (tutorModel, tutorCmd) = Tutor.init
-    in
-        (Model tutorModel tutorModel, Cmd.batch
-          [ Cmd.map LeftTutor tutorCmd
-          , Cmd.map RightTutor tutorCmd
-          ])
+  let
+    (tutorModel, tutorCmd) = Tutor.init
+  in
+    (Model tutorModel tutorModel, Cmd.batch
+      [ Cmd.map LeftTutor tutorCmd
+      , Cmd.map RightTutor tutorCmd
+      ])
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    case msg of
-        LeftTutor leftMsg ->
-            let
-                (leftModel, leftCmd) =
-                    Tutor.update leftMsg model.leftTutor
-            in
-                ({ model | leftTutor = leftModel }, Cmd.map LeftTutor leftCmd)
+  case msg of
+    LeftTutor leftMsg ->
+      let
+        (leftModel, leftCmd) =
+            Tutor.update leftMsg model.leftTutor
+      in
+        ({ model | leftTutor = leftModel }, Cmd.map LeftTutor leftCmd)
 
-        RightTutor rightMsg ->
-            let
-                (rightModel, rightCmd) =
-                    Tutor.update rightMsg model.rightTutor
-            in
-                ({ model | rightTutor = rightModel }, Cmd.map RightTutor rightCmd)
+    RightTutor rightMsg ->
+      let
+        (rightModel, rightCmd) =
+            Tutor.update rightMsg model.rightTutor
+      in
+        ({ model | rightTutor = rightModel }, Cmd.map RightTutor rightCmd)
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ Html.map LeftTutor (Tutor.view model.leftTutor)
-        , Html.map RightTutor (Tutor.view model.rightTutor)
-        ]
+  div []
+    [ Html.map LeftTutor (Tutor.view model.leftTutor)
+    , Html.map RightTutor (Tutor.view model.rightTutor)
+    ]
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

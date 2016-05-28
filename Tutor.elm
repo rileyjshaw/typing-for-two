@@ -10,13 +10,13 @@ import Keyboard
 
 
 type alias Model =
-    { test : String
-    , attempt : String
-    }
+  { test : String
+  , attempt : String
+  }
 
 
 type Msg
-    = Keypress Keyboard.KeyCode
+  = Keypress Keyboard.KeyCode
 
 
 t = "Some folks think that I'm just lazy, but the truth is that I'm really crazy"
@@ -26,19 +26,19 @@ init = (Model t "", Cmd.none)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    case msg of
-        Keypress code ->
-            ({ model | attempt = model.attempt ++ String.fromChar ( Char.fromCode code ) }, Cmd.none)
+  case msg of
+    Keypress code ->
+      ({ model | attempt = model.attempt ++ String.fromChar ( Char.fromCode code ) }, Cmd.none)
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ p [] [ text model.test ]
-        , p [] [ text model.attempt ]
-        ]
+  div []
+    [ p [] [ text model.test ]
+    , p [] [ text model.attempt ]
+    ]
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Keyboard.presses Keypress
+  Keyboard.presses Keypress
