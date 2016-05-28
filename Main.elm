@@ -5,6 +5,18 @@ import Html.Events exposing (..)
 import Tutor as Tutor
 import Monitor as Monitor
 
+stylesheet =
+  let
+    tag = "link"
+    attrs =
+      [ attribute "rel"       "stylesheet"
+      , attribute "property"  "stylesheet"
+      , attribute "href"      "./yuck.css"
+      ]
+    children = []
+  in
+    node tag attrs children
+
 main =
   Html.program
     { init = init
@@ -67,7 +79,8 @@ view model =
   div [ style [ ("display", "flex")
               , ("position", "relative")
               , ("height", "100%") ] ]
-    [ Html.map LeftTutor (Tutor.view model.leftTutor)
+    [ stylesheet
+    , Html.map LeftTutor (Tutor.view model.leftTutor)
     , Html.map RightTutor (Tutor.view model.rightTutor)
     , div [ style [ ("position", "absolute")
                   , ("top", "50%")
