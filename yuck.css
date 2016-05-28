@@ -15,13 +15,13 @@ link + div, link + div + div {
 }
 
 /* Snippet */
-link + div > div > span {
+link + div > div > span, link + div + div > div > span {
   font-size: 0.9em;
   opacity: 0.7;
 }
 
-/* Score text */
-link + div > div > span + span {
+/* Untyped text */
+link + div > div > span + span, link + div + div > div > span + span {
   font-size: 1em;
   font-weight: bold;
   opacity: 1;

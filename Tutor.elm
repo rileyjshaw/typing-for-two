@@ -37,7 +37,7 @@ update msg model =
       in
         ({ model |
           attempt = model.attempt ++ letter
-        , score = model.score + if letter == (String.slice len (len + 1) model.sourceText) then 1 else 0
+        , score = model.score + if letter == (String.slice len (len + 1) model.sourceText) then 1 else -1
         }, Cmd.none)
 
     SetSentence n ->
