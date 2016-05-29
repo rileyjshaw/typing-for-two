@@ -2,6 +2,8 @@ import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Time exposing (Time, second)
+import Keyboard exposing (..)
 import Tutor as Tutor
 import Monitor as Monitor
 
@@ -26,13 +28,17 @@ main =
     }
 
 type alias Model =
-  { leftTutor : Tutor.Model
+  { started : Bool
+  , remaining : Int
+  , leftTutor : Tutor.Model
   , rightTutor: Tutor.Model
   , monitor: Monitor.Model
   }
 
 type Msg
-  = LeftTutor Tutor.Msg
+  = Start KeyCode
+  | Tick Time
+  | LeftTutor Tutor.Msg
   | RightTutor Tutor.Msg
   | MonitorMsg Monitor.Msg
 
@@ -43,7 +49,7 @@ init =
     (tutorModel, tutorCmd) = Tutor.init
     (monitorModel, monitorCmd) = Monitor.init
   in
-    (Model tutorModel tutorModel monitorModel,
+    (Model False 30 tutorModel tutorModel monitorModel,
       Cmd.batch [ Cmd.map LeftTutor tutorCmd
                 , Cmd.map RightTutor tutorCmd
                 , Cmd.map MonitorMsg monitorCmd
@@ -53,6 +59,16 @@ init =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
+    Start _ ->
+      ({ model | started = True }, Cmd.none)
+
+    Tick _ ->
+      let m =
+        if model.started
+          then { model | remaining = model.remaining - 1 }
+          else model
+      in (m, Cmd.none)
+
     LeftTutor leftMsg ->
       let
         (leftModel, cmd) =
@@ -76,6 +92,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
+  if model.remaining <= 0 then h1 [] [ text "Everyone loses" ] else
   div [ style [ ("display", "flex")
               , ("position", "relative")
               , ("height", "100%")
@@ -91,12 +108,18 @@ view model =
                   , ("left", "0")
                   , ("width", "100%") ] ]
       [ Html.map MonitorMsg (Monitor.view model.monitor) ]
+    , div []
+      [ p [ style (if model.remaining > 10 then [] else [("color", "red")]) ]
+        [ text (if model.started then toString model.remaining else "") ]
+      ]
     ]
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.batch
-    [ Sub.map LeftTutor (Tutor.subscriptions model.leftTutor)
+    [ Time.every second Tick
+    , Keyboard.presses Start
+    , Sub.map LeftTutor (Tutor.subscriptions model.leftTutor)
     , Sub.map RightTutor (Tutor.subscriptions model.rightTutor)
     , Sub.map MonitorMsg (Monitor.subscriptions model.monitor)
     ]
