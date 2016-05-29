@@ -25,7 +25,7 @@ type Msg
 
 
 init : (Model, Cmd Msg)
-init = (Model "" "" 0, Random.generate SetSentence (Random.int 0 (Array.length sources) ) )
+init = (Model "" "" 0, Random.generate SetSentence (Random.int 0 ((Array.length sources) - 1) ) )
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
