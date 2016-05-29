@@ -31,8 +31,10 @@ type alias Model =
   { started : Bool
   , remaining : Int
   , leftTutor : Tutor.Model
-  , rightTutor: Tutor.Model
-  , monitor: Monitor.Model
+  , leftScore : Int
+  , rightTutor : Tutor.Model
+  , rightScore : Int
+  , monitor : Monitor.Model
   }
 
 type Msg
@@ -49,7 +51,7 @@ init =
     (tutorModel, tutorCmd) = Tutor.init
     (monitorModel, monitorCmd) = Monitor.init
   in
-    (Model False 20 tutorModel tutorModel monitorModel,
+    (Model False 20 tutorModel 0 tutorModel 0 monitorModel,
       Cmd.batch [ Cmd.map LeftTutor tutorCmd
                 , Cmd.map RightTutor tutorCmd
                 , Cmd.map MonitorMsg monitorCmd
@@ -71,17 +73,23 @@ update msg model =
 
     LeftTutor leftMsg ->
       let
-        (leftModel, cmd) =
+        (leftModel, cmd, score) =
             Tutor.update leftMsg model.leftTutor
       in
-        ({ model | leftTutor = leftModel }, Cmd.map LeftTutor cmd)
+        ({ model
+          | leftTutor = leftModel
+          , leftScore = score
+          }, Cmd.map LeftTutor cmd)
 
     RightTutor rightMsg ->
       let
-        (rightModel, cmd) =
+        (rightModel, cmd, score) =
             Tutor.update rightMsg model.rightTutor
       in
-        ({ model | rightTutor = rightModel }, Cmd.map RightTutor cmd)
+        ({ model
+          | rightTutor = rightModel
+          , rightScore = score
+          }, Cmd.map RightTutor cmd)
 
     MonitorMsg monMsg ->
       let
@@ -104,9 +112,9 @@ view model =
               , ("width", "100%")
               , ("justify-content", "space-between") ] ]
     [ stylesheet
-    , div [ style [ ("flex", "1 1 40%") ] ]
+    , div [ style [ ("flex", "1 1 40%"), ("border-color", if model.leftScore > model.rightScore then "#0f0" else "#f00") ] ]
       [ (Html.map LeftTutor (Tutor.view model.leftTutor)) ]
-    , div [ style [ ("flex", "1 1 40%") ] ]
+    , div [ style [ ("flex", "1 1 40%"), ("border-color", if model.rightScore > model.leftScore then "#0f0" else "#f00") ] ]
       [ (Html.map RightTutor (Tutor.view model.rightTutor)) ]
     , div [ style [ ("position", "absolute")
                   , ("top", "50%")

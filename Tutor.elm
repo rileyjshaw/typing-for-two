@@ -27,7 +27,7 @@ type Msg
 init : (Model, Cmd Msg)
 init = (Model "" "" 0, Random.generate SetSentence (Random.int 0 ((Array.length sources) - 1) ) )
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> Model -> (Model, Cmd Msg, Int)
 update msg model =
   case msg of
     Keypress code ->
@@ -38,10 +38,10 @@ update msg model =
         ({ model |
           attempt = model.attempt ++ letter
         , score = model.score + if letter == (String.slice len (len + 1) model.sourceText) then 1 else -1
-        }, Cmd.none)
+        }, Cmd.none, model.score)
 
     SetSentence n ->
-      ({ model | sourceText = Maybe.withDefault "" (Array.get n sources) }, Cmd.none)
+      ({ model | sourceText = Maybe.withDefault "" (Array.get n sources) }, Cmd.none, model.score)
 
 
 view : Model -> Html Msg
