@@ -52,5 +52,24 @@ link + div + div {
 
 /* Last character pressed */
 link + div + div + div {
-  transform: translate(0, -50%)
+  transform: translate(0, -50%);
+}
+
+/* countdown */
+link + div + div + div + div {
+  font-size: 100px;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0);
+}
+/*link + div + div + div + div > p {
+  margin: 0.5em 0;
+}*/
+
+/* aw */
+h1 {
+  font-size: 100px;
+  text-align: center;
+  margin: 300px 0 0;
+  color: red;
 }

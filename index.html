@@ -8646,9 +8646,9 @@ var _rileyjshaw$typing_for_two$Main$stylesheet = function () {
 	var tag = 'link';
 	return A3(_elm_lang$html$Html$node, tag, attrs, children);
 }();
-var _rileyjshaw$typing_for_two$Main$Model = F3(
-	function (a, b, c) {
-		return {leftTutor: a, rightTutor: b, monitor: c};
+var _rileyjshaw$typing_for_two$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {started: a, remaining: b, leftTutor: c, rightTutor: d, monitor: e};
 	});
 var _rileyjshaw$typing_for_two$Main$MonitorMsg = function (a) {
 	return {ctor: 'MonitorMsg', _0: a};
@@ -8668,7 +8668,7 @@ var _rileyjshaw$typing_for_two$Main$init = function () {
 	var tutorCmd = _p1._1;
 	return {
 		ctor: '_Tuple2',
-		_0: A3(_rileyjshaw$typing_for_two$Main$Model, tutorModel, tutorModel, monitorModel),
+		_0: A5(_rileyjshaw$typing_for_two$Main$Model, false, 30, tutorModel, tutorModel, monitorModel),
 		_1: _elm_lang$core$Platform_Cmd$batch(
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -8682,6 +8682,19 @@ var _rileyjshaw$typing_for_two$Main$update = F2(
 	function (msg, model) {
 		var _p2 = msg;
 		switch (_p2.ctor) {
+			case 'Start':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{started: true}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Tick':
+				var m = model.started ? _elm_lang$core$Native_Utils.update(
+					model,
+					{remaining: model.remaining - 1}) : model;
+				return {ctor: '_Tuple2', _0: m, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'LeftTutor':
 				var _p3 = A2(_rileyjshaw$typing_for_two$Tutor$update, _p2._0, model.leftTutor);
 				var leftModel = _p3._0;
@@ -8718,7 +8731,22 @@ var _rileyjshaw$typing_for_two$Main$update = F2(
 		}
 	});
 var _rileyjshaw$typing_for_two$Main$view = function (model) {
-	return A2(
+	return (_elm_lang$core$Native_Utils.cmp(model.remaining, 28) < 1) ? A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_rileyjshaw$typing_for_two$Main$stylesheet,
+				A2(
+				_elm_lang$html$Html$h1,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Everyone loses')
+					]))
+			])) : A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
@@ -8788,13 +8816,44 @@ var _rileyjshaw$typing_for_two$Main$view = function (model) {
 						_elm_lang$html$Html_App$map,
 						_rileyjshaw$typing_for_two$Main$MonitorMsg,
 						_rileyjshaw$typing_for_two$Monitor$view(model.monitor))
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$p,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$style(
+								(_elm_lang$core$Native_Utils.cmp(model.remaining, 10) > 0) ? _elm_lang$core$Native_List.fromArray(
+									[]) : _elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'color', _1: 'red'}
+									]))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(
+								model.started ? _elm_lang$core$Basics$toString(model.remaining) : '')
+							]))
 					]))
 			]));
+};
+var _rileyjshaw$typing_for_two$Main$Tick = function (a) {
+	return {ctor: 'Tick', _0: a};
+};
+var _rileyjshaw$typing_for_two$Main$Start = function (a) {
+	return {ctor: 'Start', _0: a};
 };
 var _rileyjshaw$typing_for_two$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		_elm_lang$core$Native_List.fromArray(
 			[
+				A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _rileyjshaw$typing_for_two$Main$Tick),
+				_elm_lang$keyboard$Keyboard$presses(_rileyjshaw$typing_for_two$Main$Start),
 				A2(
 				_elm_lang$core$Platform_Sub$map,
 				_rileyjshaw$typing_for_two$Main$LeftTutor,

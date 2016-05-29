@@ -92,7 +92,12 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  if model.remaining <= 0 then h1 [] [ text "Everyone loses" ] else
+  if model.remaining <= 0
+    then div []
+      [ stylesheet
+      , h1 [] [ text "Everyone loses" ]
+      ]
+    else
   div [ style [ ("display", "flex")
               , ("position", "relative")
               , ("height", "100%")
