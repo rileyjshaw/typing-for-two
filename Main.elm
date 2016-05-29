@@ -49,7 +49,7 @@ init =
     (tutorModel, tutorCmd) = Tutor.init
     (monitorModel, monitorCmd) = Monitor.init
   in
-    (Model False 30 tutorModel tutorModel monitorModel,
+    (Model False 20 tutorModel tutorModel monitorModel,
       Cmd.batch [ Cmd.map LeftTutor tutorCmd
                 , Cmd.map RightTutor tutorCmd
                 , Cmd.map MonitorMsg monitorCmd
